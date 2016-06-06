@@ -23,11 +23,7 @@ function [lik, latents] = likfun_gonogo(x,data)
     % OUTPUTS:
     %   lik - log-likelihood
     %   latents - structure with the following fields:
-    %           .Q - [N x C] learned values
-    %           .W - [N x C] action weights
-    %           .P - [N x C] action probabilities
-    %           .V - [N x 1] state values
-    %           .rpe - [N x 1] reward prediction error for chosen option
+    %           .v - [N x 1] drift rate
     %
     % Sam Gershman, Nov 2015
     
