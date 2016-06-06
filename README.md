@@ -3,8 +3,10 @@ RL_DDM
 
 Reinforcement learning + drift-diffusion model repository.
 
-Two-armed bandit task: see fit_bandit.m
+Requires mfit package: https://github.com/sjgershm/mfit
 
-Go/NoGo task: see fit_gonogo.m
+Two-armed bandit task: see load_data_bandit.m and fit_bandit.m
+
+Go/NoGo task: see load_data_gonogo.m and  fit_gonogo.m
 
 Questions? Contact Sam Gershman (gershman@fas.harvard.edu).

@@ -47,5 +47,5 @@ function results = fit_gonogo(data)
     
     % get latent variables
     for i = 1:length(data)
-        [~,results.latents(i)] = likfun_bandit(results.x(i,:),data(i));
+        [~,results.latents(i)] = likfun_gonogo(results.x(i,:),data(i));
     end
