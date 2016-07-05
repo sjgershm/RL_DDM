@@ -25,7 +25,7 @@ function [lik, latents] = likfun_multi(x,data)
     % Sam Gershman, Nov 2015
     
     % set parameters
-    b = x(1);           % drift rate differential action value weight
+    b = x(1);           % drift rate action value weight
     a = x(2);           % decision threshold
     
     % initialization
