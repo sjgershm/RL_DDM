@@ -27,7 +27,7 @@ function [lik, latents] = likfun_bandit(x,data)
     
     % set parameters
     b = x(1);           % drift rate differential action value weight
-    lr = x(2);          % inverse temperature
+    lr = x(2);          % learning rate
     a = x(3);           % decision threshold
     
     % initialization

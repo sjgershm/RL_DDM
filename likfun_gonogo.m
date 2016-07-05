@@ -31,7 +31,7 @@ function [lik, latents] = likfun_gonogo(x,data)
     b1 = x(1);          % drift rate go bias weight
     b2 = x(2);          % drift rate differential action value weight
     b3 = x(3);          % drift rate Pavlovian bias weight
-    lr = x(4);          % inverse temperature
+    lr = x(4);          % learning rate
     a = x(5);           % decision threshold
     
     % initialization
