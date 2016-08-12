@@ -24,7 +24,7 @@ function results = fit_multi(data)
     param(2).name = 'a';
     param(2).logpdf = @(x) 0;
     param(2).lb = 1e-3;
-    param(2).ub = 20;
+    param(2).ub = 40;
     
     % fit model
     f = @(x,data) likfun_multi(x,data);    % log-likelihood function
