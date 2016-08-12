@@ -39,7 +39,7 @@ function [lik, latents] = likfun_multi(x,data)
         rt = data.rt(n);            % response time
         
         % accumulate log-likelihood
-        logP = wfpt(t,-v(c),a);
+        logP = wfpt(rt,-v(c),a);
         for k = 1:C
             if k~=c
                 logP = logP + log(1-integral(@(t) wfpt(t,-v(k),a),0,rt));
