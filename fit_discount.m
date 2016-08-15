@@ -34,10 +34,5 @@ function results = fit_discount(data)
     param(3).ub = 20;
     
     % fit model
-    f = @(x,data) likfun_bandit(x,data);    % log-likelihood function
+    f = @(x,data) likfun_discount(x,data);    % log-likelihood function
     results = mfit_optimize(f,param,data);
-    
-    % get latent variables
-    for i = 1:length(data)
-        [~,results.latents(i)] = likfun_bandit(results.x(i,:),data(i));
-    end
