@@ -11,6 +11,7 @@ function [lik, latents] = likfun_gonogo(x,data)
     %       x(3) - drift rate Pavlovian bias weight (b3)
     %       x(4) - learning rate for state-action values (alpha)
     %       x(5) - decision threshold (a)
+    %       x(6) - non-decision time (T)
     %   data - structure with the following fields
     %           .c - [N x 1] choices
     %           .r - [N x 1] rewards
@@ -24,6 +25,8 @@ function [lik, latents] = likfun_gonogo(x,data)
     %   lik - log-likelihood
     %   latents - structure with the following fields:
     %           .v - [N x 1] drift rate
+    %           .P - [N x 1] probability of Go
+    %           .RT_mean - [N x 1] mean response time for Go
     %
     % Sam Gershman, Nov 2015
     
