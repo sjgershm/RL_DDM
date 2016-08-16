@@ -21,7 +21,7 @@ function results = fit_bandit(data)
     param(1).ub = 20;   % upper bound
     
     % learning rate
-    param(2).name = 'lr_pos';
+    param(2).name = 'lr';
     param(2).hp = [1.2 1.2];    % hyperparameters of beta prior
     param(2).logpdf = @(x) sum(log(betapdf(x,param(2).hp(1),param(2).hp(2))));
     param(2).lb = 0;
@@ -33,11 +33,12 @@ function results = fit_bandit(data)
     param(3).lb = 1e-3;
     param(3).ub = 20;
     
+    % non-decision time
+    param(4).name = 'T';
+    param(4).logpdf = @(x) 0;
+    param(4).lb = 0;
+    param(4).ub = 1;
+    
     % fit model
     f = @(x,data) likfun_bandit(x,data);    % log-likelihood function
     results = mfit_optimize(f,param,data);
-    
-    % get latent variables
-    for i = 1:length(data)
-        [~,results.latents(i)] = likfun_bandit(results.x(i,:),data(i));
-    end

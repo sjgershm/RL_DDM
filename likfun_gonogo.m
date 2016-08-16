@@ -33,12 +33,14 @@ function [lik, latents] = likfun_gonogo(x,data)
     b3 = x(3);          % drift rate Pavlovian bias weight
     lr = x(4);          % learning rate
     a = x(5);           % decision threshold
+    T = x(6);           % non-decision time
     
     % initialization
     lik = 0; C = data.C;
     S = length(unique(data.s)); % number of states
     Q = zeros(S,C);    % initial state-action values
     V = zeros(S,1);    % initial state values
+    data.rt = data.rt - T;
     mx = max(data.rt)+0.1;  % max RT
     
     for n = 1:data.N
@@ -68,6 +70,8 @@ function [lik, latents] = likfun_gonogo(x,data)
         % store latent variables
         if nargout > 1
             latents.v(n,1) = v;
+            latents.P(n,1) = 1/(1+exp(-a*v));
+            latents.RT_mean(n,1) = (0.5*a/v)*tanh(0.5*a*v)+T;
         end
         
     end

@@ -9,6 +9,7 @@ function [lik, latents] = likfun_bandit(x,data)
     %       x(1) - drift rate differential action value weight (b)
     %       x(2) - learning rate for state-action values (alpha)
     %       x(3) - decision threshold (a)
+    %       x(4) - non-decision time (T)
     %   data - structure with the following fields
     %           .c - [N x 1] choices
     %           .r - [N x 1] rewards
@@ -20,20 +21,23 @@ function [lik, latents] = likfun_bandit(x,data)
     % OUTPUTS:
     %   lik - log-likelihood
     %   latents - structure with the following fields:
-    %           .P - [N x 1] action probability
     %           .v - [N x 1] drift rate
+    %           .P - [N x 1] probability of chosen option
+    %           .RT_mean - [N x 1] mean response time for chosen option
     %
-    % Sam Gershman, Nov 2015
+    % Sam Gershman, Aug 2016
     
     % set parameters
     b = x(1);           % drift rate differential action value weight
     lr = x(2);          % learning rate
     a = x(3);           % decision threshold
+    T = x(4);           % non-decision time
     
     % initialization
     lik = 0; C = data.C;
     S = length(unique(data.s)); % number of states
     Q = zeros(S,C);    % initial state-action values
+    data.rt = data.rt - T;
     
     for n = 1:data.N
         
@@ -46,11 +50,8 @@ function [lik, latents] = likfun_bandit(x,data)
         v = b*(Q(s,2)-Q(s,1));
         
         % accumulate log-likelihod
-        if data.c(n) == 2
-            P = wfpt(data.rt(n),-v,a);  % Wiener first passage time distribution
-        else
-            P = wfpt(data.rt(n),v,a);
-        end
+        if data.c(n) == 1; v = -v; end
+        P = wfpt(data.rt(n),-v,a);  % Wiener first passage time distribution
         if isnan(P) || P==0; P = realmin; end % avoid NaNs and zeros in the logarithm
         lik = lik + log(P);
         
@@ -60,7 +61,8 @@ function [lik, latents] = likfun_bandit(x,data)
         % store latent variables
         if nargout > 1
             latents.v(n,1) = v;
-            latents.P(n,1) = P;
+            latents.P(n,1) = 1/(1+exp(-a*v));
+            latents.RT_mean(n,1) = (0.5*a/v)*tanh(0.5*a*v)+T;
         end
         
     end

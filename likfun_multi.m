@@ -9,6 +9,7 @@ function [lik, latents] = likfun_multi(x,data)
     %   x - parameters:
     %       x(1) - drift rate value weight (b)
     %       x(2) - decision threshold (a)
+    %       x(3) - non-decision time (T)
     %   data - structure with the following fields
     %           .c - [N x 1] choices
     %           .V - [N x C] values
@@ -19,7 +20,6 @@ function [lik, latents] = likfun_multi(x,data)
     % OUTPUTS:
     %   lik - log-likelihood
     %   latents - structure with the following fields:
-    %           .logP - [N x 1] action log probability
     %           .v - [N x C] drift rates
     %
     % Sam Gershman, Nov 2015
@@ -27,9 +27,11 @@ function [lik, latents] = likfun_multi(x,data)
     % set parameters
     b = x(1);           % drift rate action value weight
     a = x(2);           % decision threshold
+    T = x(3);           % non-decision time
     
     % initialization
     lik = 0; C = data.C;
+    data.rt = data.rt - T;
     
     for n = 1:data.N
         
@@ -51,7 +53,6 @@ function [lik, latents] = likfun_multi(x,data)
         % store latent variables
         if nargout > 1
             latents.v(n,:) = v;
-            latents.logP(n,1) = logP;
         end
         
     end

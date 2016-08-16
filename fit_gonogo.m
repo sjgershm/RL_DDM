@@ -41,11 +41,12 @@ function results = fit_gonogo(data)
     param(5).lb = 1e-3;
     param(5).ub = 20;
     
+    % non-decision time
+    param(6).name = 'T';
+    param(6).logpdf = @(x) 0;
+    param(6).lb = 0;
+    param(6).ub = 1;
+    
     % fit model
     f = @(x,data) likfun_gonogo(x,data);    % log-likelihood function
     results = mfit_optimize(f,param,data);
-    
-    % get latent variables
-    for i = 1:length(data)
-        [~,results.latents(i)] = likfun_gonogo(results.x(i,:),data(i));
-    end

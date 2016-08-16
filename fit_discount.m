@@ -33,6 +33,12 @@ function results = fit_discount(data)
     param(3).lb = 1e-3;
     param(3).ub = 20;
     
+    % non-decision time
+    param(4).name = 'T';
+    param(4).logpdf = @(x) 0;
+    param(4).lb = 0;
+    param(4).ub = 1;
+    
     % fit model
     f = @(x,data) likfun_discount(x,data);    % log-likelihood function
     results = mfit_optimize(f,param,data);

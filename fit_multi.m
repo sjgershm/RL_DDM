@@ -26,11 +26,12 @@ function results = fit_multi(data)
     param(2).lb = 1e-3;
     param(2).ub = 40;
     
+    % non-decision time
+    param(3).name = 'T';
+    param(3).logpdf = @(x) 0;
+    param(3).lb = 0;
+    param(3).ub = 1;
+    
     % fit model
     f = @(x,data) likfun_multi(x,data);    % log-likelihood function
     results = mfit_optimize(f,param,data);
-    
-    % get latent variables
-    for i = 1:length(data)
-        [~,results.latents(i)] = likfun_bandit(results.x(i,:),data(i));
-    end
