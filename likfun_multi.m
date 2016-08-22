@@ -41,13 +41,13 @@ function [lik, latents] = likfun_multi(x,data)
         rt = data.rt(n);            % response time
         
         % accumulate log-likelihood
-        logP = wfpt(rt,-v(c),a);
+        logP = log(wfpt(rt,-v(c),a));
         for k = 1:C
             if k~=c
-                logP = logP + log(1-integral(@(t) wfpt(t,-v(k),a),0,rt));
+                logP = logP + log(max(realmin,1-integral(@(t) wfpt(t,-v(k),a),0,rt)));
             end
         end
-        if isnan(logP); logP = log(realmin); end
+        if isnan(logP) || isinf(logP) || ~isreal(logP); logP = log(realmin); end
         lik = lik + logP;
         
         % store latent variables
