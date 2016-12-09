@@ -21,7 +21,7 @@ function [lik, latents] = likfun_logreg(x,data)
     
     v = [ones(data.N,1) data.V data.X]*x';
     p = 1./(1+exp(-v));
-    lik = sum(log(p));
+    lik = sum(data.c.*log(p) + (1-data.c).*log(1-p));
     
     % store latent variables
     if nargout > 1
