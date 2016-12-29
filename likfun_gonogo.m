@@ -43,7 +43,7 @@ function [lik, latents] = likfun_gonogo(x,data)
     S = length(unique(data.s)); % number of states
     Q = zeros(S,C);    % initial state-action values
     V = zeros(S,1);    % initial state values
-    data.rt = data.rt - T;
+    data.rt = max(eps,data.rt - T);
     mx = max(data.rt)+0.1;  % max RT
     
     for n = 1:data.N

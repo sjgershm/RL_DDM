@@ -33,7 +33,7 @@ function [lik, latents] = likfun_binary(x,data)
     
     % initialization
     lik = 0;
-    data.rt = data.rt - T;
+    data.rt = max(eps,data.rt - T);
     
     for n = 1:data.N
         

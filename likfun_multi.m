@@ -31,7 +31,7 @@ function [lik, latents] = likfun_multi(x,data)
     
     % initialization
     lik = 0; C = data.C;
-    data.rt = data.rt - T;
+    data.rt = max(eps,data.rt - T);
     
     for n = 1:data.N
         

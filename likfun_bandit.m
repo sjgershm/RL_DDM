@@ -37,7 +37,7 @@ function [lik, latents] = likfun_bandit(x,data)
     lik = 0; C = data.C;
     S = length(unique(data.s)); % number of states
     Q = zeros(S,C);    % initial state-action values
-    data.rt = data.rt - T;
+    data.rt = max(eps,data.rt - T);
     
     for n = 1:data.N
         
