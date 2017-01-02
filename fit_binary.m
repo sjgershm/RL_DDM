@@ -20,23 +20,17 @@ function results = fit_binary(data)
     param(1).lb = -20; % lower bound
     param(1).ub = 20;   % upper bound
     
-    % drift rate intercept
-    param(2).name = 'b0';
-    param(2).logpdf = @(x) 0;  % uniorm prior
-    param(2).lb = -20; % lower bound
-    param(2).ub = 20;   % upper bound
-    
     % decision threshold
-    param(3).name = 'a';
-    param(3).logpdf = @(x) 0;
-    param(3).lb = 1e-3;
-    param(3).ub = 40;
+    param(2).name = 'a';
+    param(2).logpdf = @(x) 0;
+    param(2).lb = 1e-3;
+    param(2).ub = 40;
     
     % non-decision time
-    param(4).name = 'T';
-    param(4).logpdf = @(x) 0;
-    param(4).lb = 0;
-    param(4).ub = 1;
+    param(3).name = 'T';
+    param(3).logpdf = @(x) 0;
+    param(3).lb = 0;
+    param(3).ub = 1;
     
     % fit model
     f = @(x,data) likfun_binary(x,data);    % log-likelihood function
