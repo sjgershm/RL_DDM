@@ -32,6 +32,12 @@ function results = fit_binary(data)
     param(3).lb = 0;
     param(3).ub = 1;
     
+    % OPTIONAL: drift bias
+    param(4).name = 'b0';
+    param(4).logpdf = @(x) 0;
+    param(4).lb = -20;
+    param(4).ub = 20;
+    
     % fit model
     f = @(x,data) likfun_binary(x,data);    % log-likelihood function
     results = mfit_optimize(f,param,data);
